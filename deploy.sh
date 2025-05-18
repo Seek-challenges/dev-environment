@@ -13,12 +13,12 @@ docker network create \
   private
 
 # Deploy discovery
-docker-compose -p discovery -f compose/discovery.yml up -d
+docker compose -p discovery -f compose/discovery.yml up -d
 
 # Deploy databases
-docker-compose -p storage -f compose/cache.yml up -d
+docker compose -p storage -f compose/cache.yml up -d
 
 sleep 3
 
 # Deploy backend
-docker-compose -p backend -f compose/backend.yml up -d --scale core-customer=2
+docker compose -p backend -f compose/backend.yml up -d --scale core-customer=2
