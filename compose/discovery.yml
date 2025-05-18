@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  consul-discovery:
+    image: consul:1.15
+    command: agent -server -bootstrap-expect 1 -ui -data-dir /tmp -client=0.0.0.0
+    ports:
+      - "8300:8500"
+    networks:
+      - private
+
+networks:
+  private:
+    external: true
