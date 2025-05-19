@@ -1,21 +1,38 @@
 version: "3"
 services:
   core-customer:
-    image: 119944160132.dkr.ecr.us-east-2.amazonaws.com/core-customer:1.0.0-release-005
+    build:
+      context: ../../core-customer
+      dockerfile: Dockerfile
     environment:
-      - 'APP_PORT=8080'
-      - 'APP_ENVIRONMENT=prod'
-      - 'AWS_ACCESS_KEY_ID=AKIARX3J2UOCCTR36J4S'
-      - 'AWS_ACCOUNT_ID=119944160132'
-      - 'AWS_REGION=us-east-2'
-      - 'AWS_SECRET_ACCESS_KEY=BhIyeMal6Po3G8/cmbcH+oIpUbIR8AVV3rvxux9u'
-      - 'DATABASE_HOST=database-1.c10qi4oq8v59.us-east-2.rds.amazonaws.com'
+        - 'APP_ENVIRONMENT=dev'
+        - 'DATABASE_HOST=db_core_customer'
+        - 'DATABASE_PORT=3306'
+        - 'DATABASE_NAME=db_core_customer'
+        - 'DATABASE_USERNAME=customer'
+        - 'DATABASE_PASSWORD=password'
+        - 'KAFKA_HOST=kafka-broker'
+        - 'KAFKA_PORT=9092'
+        - 'REDIS_HOST_2=cache_redis'
+    networks:
+      - private
+
+  app-customer:
+    build:
+      context: ../../app-customer
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    environment:
+      - 'APP_ENVIRONMENT=dev'
+      - 'DATABASE_HOST=db_app_customer'
       - 'DATABASE_PORT=3306'
-      - 'DATABASE_USERNAME=root'
-      - 'DATABASE_PASSWORD=root12345'
-      - 'CONSUL_HOST=consul-discovery'
-      - 'CONSUL_PORT=8500'
-      - 'REDIS_HOST=redis'
+      - 'DATABASE_NAME=db_app_customer'
+      - 'DATABASE_USERNAME=customer'
+      - 'DATABASE_PASSWORD=password'
+      - 'KAFKA_HOST=kafka-broker'
+      - 'KAFKA_PORT=9092'
+      - 'CORE_CUSTOMER_API_HOST=core-customer'
     networks:
       - private
 

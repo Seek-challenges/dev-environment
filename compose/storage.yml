@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  cache_redis:
+    image: redis:7.0
+    networks:
+      - private
+
+  db_core_customer:
+    image: mysql:latest
+    environment:
+      - 'MYSQL_DATABASE=db_core_customer'
+      - 'MYSQL_PASSWORD=password'
+      - 'MYSQL_ROOT_PASSWORD=root'
+      - 'MYSQL_USER=customer'
+    networks:
+      - private
+
+  db_app_customer:
+    image: mysql:latest
+    environment:
+      - 'MYSQL_DATABASE=db_app_customer'
+      - 'MYSQL_PASSWORD=password'
+      - 'MYSQL_ROOT_PASSWORD=root'
+      - 'MYSQL_USER=customer'
+    networks:
+      - private
+
+networks:
+  private:
+    external: true

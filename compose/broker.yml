@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  kafka-broker:
+    image: johnnypark/kafka-zookeeper:latest
+    environment:
+      ADVERTISED_HOST: kafka-broker
+      NUM_PARTITIONS: 2
+    networks:
+      - private
+
+  akhq:
+    image: tchiotludo/akhq:latest
+    environment:
+      AKHQ_CONFIGURATION: |
+        akhq:
+          connections:
+            local:
+              properties:
+                bootstrap.servers: "kafka-broker:9092"
+    ports:
+      - "8082:8080"
+    depends_on:
+      - kafka-broker
+    networks:
+      - public
+      - private
+
+networks:
+  public:
+    external: true
+  private:
+    external: true
