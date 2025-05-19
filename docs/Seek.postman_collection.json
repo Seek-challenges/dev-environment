@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "945e5b10-680d-425d-9599-aacd01607dbb",
+		"name": "Seek",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24860046"
+	},
+	"item": [
+		{
+			"name": "Add Customer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get traceId from response and add to traceId collection variable\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"jwt\", jsonData.token);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstName\": \"Arturo\",\n  \"lastName\": \"Diaz\",\n  \"phone\": \"12342346497\",\n  \"age\": \"60\",\n  \"birthDate\": \"1994-05-17\",\n  \"password\": \"1234567\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://ec2-3-14-254-81.us-east-2.compute.amazonaws.com/v1/app-customers",
+					"protocol": "http",
+					"host": [
+						"ec2-3-14-254-81",
+						"us-east-2",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"v1",
+						"app-customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get traceId from response and add to traceId collection variable\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"jwt\", jsonData.token);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"phone\": \"12342346497\",\n  \"password\": \"1234567\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://ec2-3-14-254-81.us-east-2.compute.amazonaws.com/v1/auth",
+					"protocol": "http",
+					"host": [
+						"ec2-3-14-254-81",
+						"us-east-2",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"v1",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get metrics",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://ec2-3-14-254-81.us-east-2.compute.amazonaws.com/v1/app-customers/metrics",
+					"protocol": "http",
+					"host": [
+						"ec2-3-14-254-81",
+						"us-east-2",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"v1",
+						"app-customers",
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get predictions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://ec2-3-14-254-81.us-east-2.compute.amazonaws.com/v1/app-customers/predictions",
+					"protocol": "http",
+					"host": [
+						"ec2-3-14-254-81",
+						"us-east-2",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"v1",
+						"app-customers",
+						"predictions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt",
+			"value": ""
+		}
+	]
+}
